@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WebSocket</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <style>
+            li
+            {
+                list-style: none;
+            }
+            li a
+            {
+                text-decoration: none;
+            }
+            .taskbar1
+            {
+                position: relative;
+                float: left;
+                padding: 15px 25px;
+                border: 1px solid #000;
+                border-right: none;
+            }
+            .taskbar1:last-child
+            {
+                border-right: 1px solid #000;
+            }
+            .taskbar1 a
+            {
+                color: #000;
+            }
+            .taskbar1:hover
+            {
+                background-color: #000000;
+            }
+            .taskbar1:hover a
+            {
+                color: #ffffff;
+            }
+            .dropdown
+            {
+                position: fixed; 
+                opacity: 0;
+                top: 66px;
+                left: 53px;
+                visibility: hidden;
+                width:150px;
+            }
+            .subs 
+            {
+                left: -45px;
+                position: relative;
+                padding: 15px;
+                text-align: center;
+                border: 1px solid #000;
+                border-bottom: none;
+            }
+            .subs:first-child
+            {
+                border-top: none;
+            }
+            .subs:last-child
+            {
+                border-bottom: 1px solid #000;
+            }
+            .subs a
+            {
+                color: #000;
+            }
+            .hassubs:hover .dropdown
+            {
+                opacity: 1;
+                visibility: visible; 
+                
+            }
+            .mainnav li:hover ul li a,.mainnav li ul li:hover ul a li
+            {
+                color: #000;
+            }
+            .mainnav li ul li:hover,.mainnav li ul li ul li:hover
+            {
+                background: #000;
+                
+            }
+            .mainnav li ul li:hover a,.mainnav li ul li ul a li:hover 
+            {
+                color: #fff;
+                
+            }
+            .dropdown2
+            {
+                position: fixed; 
+                opacity: 0;
+                top: 66px;
+                left: 203px;
+                visibility: hidden;
+                width:150px;
+            }
+            .hassubs .hassubs:hover .dropdown2
+            {
+                opacity: 1;
+                visibility: visible; 
+            }
+            .clearboth
+            {
+                clear: both;
+            }
+            
+        </style>
+    </head>
+    <body>
+        
+        <header>
+            <ul class="mainnav">
+                <li class="taskbar1"><a href="#">Electronics</a></li>
+                <li class="taskbar1 hassubs">
+                    <a href="#">Appliances</a>
+                    <ul class="dropdown">
+                        <li class="subs"><a href="#">Washing Machines</a></li>
+                        <li class="subs hassubs"><a href="#">Televisions</a>
+                            <ul class="dropdown2">
+                                <a onclick="send('Sony');"><li class="subs">Sony</li></a>
+                                <a onclick="send('Samsung');"><li class="subs">Samsung</li></a>
+                                <a onclick="send('LG');"><li class="subs">LG</li></a>
+                                <a onclick="send('Hisense');"><li class="subs">Hisense</li></a>
+                            </ul>
+                        </li>
+                        <li class="subs"><a href="#">Refrigerators</a></li>
+                        <li class="subs"><a href="#">Air conditioners</a></li>
+                        <li class="subs"><a href="#">Small home appliances</a></li>
+                        <li class="subs"><a href="#">Health care appliances</a></li>
+                    </ul>
+                </li>
+                <li class="taskbar1"><a href="#">Baby & Kids</a></li>
+                <li class="taskbar1"><a href="#">Home & Furniture</a></li>
+                <li class="taskbar1 hassubs"><a href="#">Books</a>
+                    <ul class="dropdown">
+                        <li class="subs"><a href="#">Washing Machines</a></li>
+                        <li class="subs hassubs"><a href="#">Televisions</a>
+                            <ul class="dropdown2">
+                                <li class="subs"><a href="#">Sony</a></li>
+                                <li class="subs"><a href="#">Samsung</a></li>
+                                <li class="subs"><a href="#">LG</a></li>
+                                <li class="subs"><a href="#">Hisense</a></li>
+                            </ul>
+                        </li>
+                        <li class="subs"><a href="#">Refrigerators</a></li>
+                        <li class="subs"><a href="#">Air conditioners</a></li>
+                        <li class="subs"><a href="#">Small home appliances</a></li>
+                        <li class="subs"><a href="#">Health care appliances</a></li>
+                    </ul>
+                </li>
+                <li class="taskbar1"><a href="#">Gaming & Accessories</a></li>
+            </ul>
+        </header>
+        <div class="clearboth"></div>
+       
+        <script type="text/javascript">
+                       
+            var webSocket;
+            webSocket = new WebSocket("ws://localhost:8080/TestApp/actions");
+            
+            function send(text){
+                webSocket.send(text);
+            }
+            webSocket.onmessage = function(event){
+                    
+                    url = '/TestApp/nextPage.html?value='+encodeURIComponent(event.data);
+                    document.location.href = url;
+            };
+            
+            /**
+             * Sends the value of the text input to the server
+            **/
+            
+            function closeSocket()
+            {
+                webSocket.close();
+            }
+ 
+            function writeResponse(text)
+            {
+                messages.innerHTML = text;
+            }
+        </script>
+    </body>
+</html>
