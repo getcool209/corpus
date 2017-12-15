@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .midContainer
+            {
+                margin-top: 100px;
+                margin-left: 500px;
+                font-size: 40px;
+                font-weight: 700;
+            }
+        </style>
+        <script>
+            window.onload = function () {
+                var url = document.location.href,
+                    params = url.split('?')[1].split('&'),
+                    data = {}, tmp;
+                for (var i = 0, l = params.length; i < l; i++) {
+                     tmp = params[i].split('=');
+                     data[tmp[0]] = tmp[1];
+                }
+                if(data.subsubtab)
+                    document.getElementById('pageTextHolder').innerHTML = data.subsubtab;
+            }
+        </script>
+    </head>
+    <body>
+        <div class="midContainer" id="pageTextHolder">
+            
+        </div>
+    </body>
+</html>
